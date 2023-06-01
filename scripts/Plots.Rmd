@@ -1,0 +1,499 @@
+---
+title: "Citations Vizualization"
+author: "Kate Vinita Fitch"
+output: html_document
+---
+
+```{r pkg}
+
+library(lattice)
+library(latticeExtra)
+library(RColorBrewer)
+library(raster)
+library(rasterVis)
+library(gt)
+library(expss)
+
+
+```
+
+```{r}
+
+lc_palette <- brewer.pal(n = 9, "RdBu")
+lc_palette <- lc_palette %>% adjust_luminance(+1.75)
+
+lc_at = c(-Inf, -4, -2, -1, 1, 2, 4, Inf)
+lc_brks = c(-4, -2, -1, 0, 1, 2, 4)
+
+lc_colorkey <- list(at = lc_brks,  col = lc_palette,  labels = list(at = lc_brks, labels = c("<", -4, -2, 0, 2, 4, ">")))
+
+
+png(file = "lc_heat1.png",
+bg = "transparent")
+
+levelplot(t(lc_z[[1]])[, nrow(lc_z[[1]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+
+dev.off()
+
+png(file = "lc_heat2.png",
+    bg = "transparent")
+
+levelplot(t(lc_z[[2]])[, nrow(lc_z[[2]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "lc_heat3.png",
+    bg = "transparent")
+
+levelplot(t(lc_z[[3]])[, nrow(lc_z[[3]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "lc_heat4.png",
+    bg = "transparent")
+
+levelplot(t(lc_z[[4]])[, nrow(lc_z[[4]]):1],
+         scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "lc_heat5.png",
+    bg = "transparent")
+
+levelplot(t(lc_z[[5]])[, nrow(lc_z[[5]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "lc_heat6.png",
+    bg = "transparent")
+
+levelplot(t(lc_z[[6]])[, nrow(lc_z[[6]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+```
+
+```{r}
+
+png(file = "lc_bar1.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,1]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+png(file = "lc_bar2.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,2]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+png(file = "lc_bar3.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,3]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+png(file = "lc_bar4.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,4]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+png(file = "lc_bar5.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,5]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+png(file = "lc_bar6.png", bg = "transparent", width = 500)
+barchart(rev(lc_cites[,6]), col = "black", bg = "transparent", xlim = c(0,1600))
+dev.off()
+
+
+```
+
+```{r}
+
+png(file = "fg_heat1.png",
+    bg = "transparent")
+
+levelplot(t(fg_z[[1]])[, nrow(fg_z[[1]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "fg_heat2.png",
+    bg = "transparent")
+
+levelplot(t(fg_z[[2]])[, nrow(fg_z[[2]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "fg_heat3.png",
+    bg = "transparent")
+
+levelplot(t(fg_z[[3]])[, nrow(fg_z[[3]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "fg_heat4.png",
+    bg = "transparent")
+
+levelplot(t(fg_z[[4]])[, nrow(fg_z[[4]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+dev.off()
+
+png(file = "fg_heat5.png",
+    bg = "transparent")
+
+levelplot(t(fg_z[[5]])[, nrow(fg_z[[5]]):1],
+          scales=list(x=list(rot=45, 
+                             labels = c("Adler, 2002", 
+                                          "Bourdieu, 1986", 
+                                          "Burt, 1992", 
+                                          "Coleman, 1990", 
+                                          "Coleman, 1988", 
+                                          "Granovetter, 1973", 
+                                          "Lin, 2001", 
+                                          "Nahapiet, 1998", 
+                                          "Portes, 1998", 
+                                          "Putnam, 2000", 
+                                          "Putnam, 1995", 
+                                          "Putnam, 1993"
+                                        )),
+                      y = list(labels = c("Putnam, 1993",
+                                        "Putnam, 1995",
+                                        "Putnam, 2000",
+                                        "Portes, 1998",
+                                        "Nahapiet, 1998",
+                                        "Lin, 2001",
+                                        "Granovetter, 1973",
+                                        "Coleman, 1988",
+                                        "Coleman, 1990",
+                                        "Burt, 1992",
+                                        "Bourdieu, 1986",
+                                        "Adler, 2002"))),
+          at = lc_at,
+          colorkey = FALSE,
+          col.regions = lc_palette,
+          xlab = NULL,
+          ylab = NULL)
+
+dev.off()
+
+```
+
+```{r}
+
+png(file = "fg_bar1.png", bg = "transparent", width = 500)
+barchart(rev(fg_cites[,1]), col = "black", bg = "transparent", xlim = c(0,1800))
+dev.off()
+
+png(file = "fg_bar2.png", bg = "transparent", width = 500)
+barchart(rev(fg_cites[,2]), col = "black", bg = "transparent", xlim = c(0,1800))
+dev.off()
+
+png(file = "fg_bar3.png", bg = "transparent", width = 500)
+barchart(rev(fg_cites[,3]), col = "black", bg = "transparent", xlim = c(0,1800))
+dev.off()
+
+png(file = "fg_bar4.png", bg = "transparent", width = 500)
+barchart(rev(fg_cites[,4]), col = "black", bg = "transparent", xlim = c(0,1800))
+dev.off()
+
+png(file = "fg_bar5.png", bg = "transparent", width = 500)
+barchart(rev(fg_cites[,5]), col = "black", bg = "transparent", xlim = c(0,1800))
+dev.off()
+
+
+```
+
