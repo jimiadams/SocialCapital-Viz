@@ -1,17 +1,23 @@
 ---
-title: 'Appendix: Whose Social Capital?'
-author: "jimi adams & Catherine Fitch"
-date: "12/18/2020"
+title: 'Supplementary Information: Whose Social Capital?'
+author: "jimi adams & Kate Vinita Fitch"
+date:  "`r format(Sys.time(), '%Y %B %d')`"
 output: pdf_document
+bibliography: references.bib
+link-citations: true
+
 ---
-Some basic information that likely won't make it into the manuscript but is helpful for interpreting what's there.
+
+This document provides further details and justification for some of the analytic decisions made in the primary manuscript. We also provide some additional ancillary descriptive characteristics of our analytic corpus and results.
+
+First, some basic information about the scope of the corpus and constructed networks.
 
   - Number of papers in corpus: 21,160
   - Total citations: 985,749 (to 533,111 unique papers)
-  - Giant component size in citation network: 546,159 (only drops 4,073 papers from above)
+  - Giant component [@Harary:1969] size in citation network: 546,159 (only drops 4,073 papers from focal corpus)
   - Citations in GC: 981,875 (to 529,244 unique papers)
   
-Community detection on the citation giant component
+For conducting the community structure analyses on this citation network, the paper presents results using [@Blondel:2008aa], but we also ran all analyses using [@Clauset2004]. In the summaries in this SI, we include both, and also elaborate the demosntrated demonstrated similarities and differences between these strategies. After applying the community detection algorithms on the citation giant component, we have: 
   
   - Number of papers in components size>10k
     - fast-greedy solution: 307,977
