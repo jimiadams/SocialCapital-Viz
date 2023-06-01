@@ -16,8 +16,8 @@ This repo provides the code (but not the data)^[To comply with Web of Science da
     
 ## Included Data Objects:
 1. **data/louvain.Rda** - the primary results from the louvain solution that is presented in the paper. This environment includes 3 objects:
-    a. *lc_cites* - the number of citations received by each "key paper" from papers in each of the identified communities (this provides the information for the top panel of Figure 1).
-    a. *lcct* - the frequency of co-citations among the "key papers" within each of the identified communities.
-    a. *lc_z* - the computed z-scores for the divergence from random expectations (see #3 below) of those co-citation rates (this provides the information for the bottom panel of Figure 1).
+      a. *lc_cites* - the number of citations received by each "key paper" from papers in each of the identified communities (this provides the information for the top panel of Figure 1).
+      a. *lcct* - the frequency of co-citations among the "key papers" within each of the identified communities.
+      a. *lc_z* - the computed z-scores for the divergence from random expectations (see #3 below) of those co-citation rates (this provides the information for the bottom panel of Figure 1).
 1. **data/fast_greedy.Rda** - the corresponding elements to #1, but using the fast greedy community solution; here the "lc" prefixes above are all replaced with "fg"s.
 1. **baseline.Rdata** - this includes a single object that is a list of 1000 draws of random co-citation rates among the "key papers" in the corpus. See a text explanation of how this baseline was determined in the Appendix, or the code for computing it in the 3_NetworkCommunities.R script.
