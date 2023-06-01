@@ -1,10 +1,10 @@
 # Social Capital Visualization
 Using bibliometric analyses to visualize fractures in social capital research. Paper to be published in Socius w/ Kate Vinita Fitch. The basic idea here is to provide a preliminary characterization of the existing divides and lack of consensus around conceptualization and usage of social capital as a concept.
 
-This repo provides the code (but not the data)^[To comply with Web of Science data use agreements, this repo does not include raw, nor compiled datasets of complete records.] for replicating the analyses in the manuscript.
+This repo provides the code (but not the data)[^1] for replicating the analyses in the manuscript.
 
 ## Basic Steps - 
-0. As with most of these types of analyses in the work I've done w/ Ryan Light (see details [here](https://sites.google.com/site/jimiadams/projects/ideas)), I start from ISI. There's a screengrab version of my search criteria [here](Search_Criteria.png).^[If replicating, be sure to grab the "Full Record and Cited References" versions of these files.] The search^[This was executed on Oct 23, 2020, and is constrained on the front end by my university's subscription to ISI (only goes back through 1974). But I can't imagine either of those really determine what we find here.] narrowly defined the corpus as all documents including "social capital" as a topic^[The ISI "topic" field includes searching the title, abstract, and keywords of each document.]
+0. As with most of these types of analyses in the work I've done w/ Ryan Light (see details [here](https://sites.google.com/site/jimiadams/projects/ideas)), I start from ISI. There's a screengrab version of my search criteria [here](Search_Criteria.png).[^2] The search[^3] narrowly defined the corpus as all documents including "social capital" as a topic.[^4]
 1. **1_DataProcessing.R** - I used the [bibliometrix](https://www.bibliometrix.org/) package to process those files into dataframe format.
 1. **2_BuildNetworks.Rmd** - I used an old script of mine Scientometric_Networks.R (in the scripts folder) to construct citation, co-citation, and bibliographic coupling networks from these data. 
     - Dependencies: social_capital.Rdata (created in step 1).
@@ -22,3 +22,11 @@ This repo provides the code (but not the data)^[To comply with Web of Science da
       
 1. **data/fast_greedy.Rda** - the corresponding elements to #1, but using the fast greedy community solution; here the "lc" prefixes above are all replaced with "fg"s.
 1. **baseline.Rdata** - this includes a single object that is a list of 1000 draws of random co-citation rates among the "key papers" in the corpus. See a text explanation of how this baseline was determined in the Appendix, or the code for computing it in the 3_NetworkCommunities.R script.
+
+
+## Notes
+[^1]: To comply with Web of Science data use agreements, this repo does not include raw, nor compiled datasets of complete records.
+[^2]: If replicating, be sure to grab the "Full Record and Cited References" versions of these files.
+[^3]: This was executed on Oct 23, 2020, and is constrained on the front end by my university's subscription to ISI (only goes back through 1974). But I can't imagine either of those really determine what we find here.
+[^4]: The ISI "topic" field includes searching the title, abstract, and keywords of each document.
+
