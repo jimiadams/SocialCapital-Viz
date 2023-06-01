@@ -1,0 +1,49 @@
+---
+title: 'Appendix: Whose Social Capital?'
+author: "jimi adams & Catherine Fitch"
+date: "12/18/2020"
+output: pdf_document
+---
+Some basic information that likely won't make it into the manuscript but is helpful for interpreting what's there.
+
+  - Number of papers in corpus: 21,160
+  - Total citations: 985,749 (to 533,111 unique papers)
+  - Giant component size in citation network: 546,159 (only drops 4,073 papers from above)
+  - Citations in GC: 981,875 (to 529,244 unique papers)
+  
+Community detection on the citation giant component
+  
+  - Number of papers in components size>10k
+    - fast-greedy solution: 307,977
+    - louvain solution: 304,163
+    
+  - Size of those components in the louvain solution
+    - 
+    
+Identifying the "top citations" (receiving >= 1k citations within the corpus):
+  
+  - [1] "adler ps, 2002, acad manage rev, v27, p17, doi 10.2307/4134367"
+  - [2] "bourdieu p., 1986, hdb theory res socio, doi doi 10.1002/9780470755679.ch15"
+  - [3] "burt r, 1992, structural holes soc"                                         
+  - [4] "coleman j., 1990, fdn social theory"                                        
+  - [5] "coleman js, 1988, am j sociol, v94, ps95, doi 10.1086/228943"               
+  - [6] "granovetter ms, 1973, am j sociol, v78, p1360, doi 10.1086/225469"          
+  - [7] "lin nan, 2001, social capital theor"                                        
+  - [8] "nahapiet j, 1998, acad manage rev, v23, p242, doi 10.2307/259373"           
+  - [9] "portes a, 1998, annu rev sociol, v24, p1, doi 10.1146/annurev.soc.24.1.1"   
+  - [10] "putnam r., 2000, bowling alone collap"                                      
+  - [11] "putnam rd, 1995, j democracy, v0006"                                        
+  - [12] "putnam robert d., 1993, making democracy wor"
+  
+How many citations are there to the set of those top citations in the largest citation clusters?
+  - Raw count: 681  777  868  354  427 1929 2886 6022 4306 1656 
+  - As a proportion of citations sent within those clusters: 
+  
+Which communities are each of the top_cites in (recognizing this isn't the question here)? 
+
+  - In FG solution, they're all in the same community. 
+  - In louvain, they are in five separate communities
+      - {adler, burt, coleman_1990, granovetter, nahapiet}
+      - {bourdieu, lin, putnam_2000}
+      - {coleman_1988}
+      - {portes, putnam_1995, putnam_1993}). 

@@ -1,0 +1,148 @@
+---
+title: "Tables & Figures"
+author: "jimi adams"
+date: "12/18/2020"
+output: html_document
+---
+This file takes the elements built in the previous scripts and pulls together analyses for the main Figure in the paper, and some necessary preliminary elements for generating those.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Let's start with some basic summary information.
+
+```{r descriptives}
+library(igraph)
+load("data/networks.Rdata")
+load("data/comms.Rdata")
+# Max degree
+  max(degree(citation, mode="out"))
+# Network information 
+  citation
+  cgc <- induced_subgraph(citation, clusters(citation, mode="weak")$membership==which.max(clusters(citation, mode="weak")$csize))
+
+# N papers cited
+  length(which(degree(citation, mode="out")>0))
+  length(which(degree(cgc, mode="out")>0))
+  
+```
+
+Ok, now for the analyses in the actual paper.
+```{r analyses}
+library(Matrix)
+
+# Grabbing the number of citations to top_cites papers by cluster
+fgcc_clusters <- rg_fg100 # top_cites co-citation by cluster
+fg_cites <- matrix(data=NA, nrow=length(top_cites), ncol=length(rg_fg100), dimnames=list(top_cites, names(fg_100)))
+#all(artcites$M$LABEL == mdf$label) # double checking ordering
+fg_comms <- sort(table(mdf$fg)[table(mdf$fg)>100], decreasing=T)
+fg_labs <- as.numeric(names(fg_comms))
+for (i in 1:length(fg_labs)){
+  ccite <- unlist(strsplit(artcites$M  [mdf$fg==fg_labs[[i]],]$CR, "[;]"))
+  fg_cites[1,i] <- length(which((ccite %in% adler)==T))
+  fg_cites[2,i] <- length(which((ccite %in% bourdieu)==T))
+  fg_cites[3,i] <- length(which((ccite %in% burt)==T))
+  fg_cites[4,i] <- length(which((ccite %in% coleman_fdn)==T))
+  fg_cites[5,i] <- length(which((ccite %in% coleman_ajs)==T))
+  fg_cites[6,i] <- length(which((ccite %in% granov)==T))
+  fg_cites[7,i] <- length(which((ccite %in% lin)==T))
+  fg_cites[8,i] <- length(which((ccite %in% nahapiet)==T))
+  fg_cites[9,i] <- length(which((ccite %in% portes)==T))
+  fg_cites[10,i] <- length(which((ccite %in% putnam_ba)==T))
+  fg_cites[11,i] <- length(which((ccite %in% putnam_jd)==T))
+  fg_cites[12,i] <- length(which((ccite %in% putnam_mdw)==T))
+}
+
+
+# Same for louvain solution
+lccc_clusters <- rg_lc1000 # top_cites co-citation by cluster
+lc_cites <- matrix(data=NA, nrow=length(top_cites), ncol=length(rg_lc1000), dimnames=list(top_cites, names(lc_1000)))
+all(artcites$M$LABEL == mdf$label) # double checking ordering
+lc_comms <- sort(table(mdf$lc)[table(mdf$lc)>1000], decreasing=T)
+lc_labs <- as.numeric(names(lc_comms))
+for (i in 1:length(lc_labs)){
+  ccite <- unlist(strsplit(artcites$M  [mdf$lc==lc_labs[[i]],]$CR, "[;]"))
+  lc_cites[1,i] <- length(which((ccite %in% adler)==T))
+  lc_cites[2,i] <- length(which((ccite %in% bourdieu)==T))
+  lc_cites[3,i] <- length(which((ccite %in% burt)==T))
+  lc_cites[4,i] <- length(which((ccite %in% coleman_fdn)==T))
+  lc_cites[5,i] <- length(which((ccite %in% coleman_ajs)==T))
+  lc_cites[6,i] <- length(which((ccite %in% granov)==T))
+  lc_cites[7,i] <- length(which((ccite %in% lin)==T))
+  lc_cites[8,i] <- length(which((ccite %in% nahapiet)==T))
+  lc_cites[9,i] <- length(which((ccite %in% portes)==T))
+  lc_cites[10,i] <- length(which((ccite %in% putnam_ba)==T))
+  lc_cites[11,i] <- length(which((ccite %in% putnam_jd)==T))
+  lc_cites[12,i] <- length(which((ccite %in% putnam_mdw)==T))
+}
+
+#### Create a matrix of the citations received by each top citation from within each citation network cluster.
+# Convert to matrices
+# The refs have wildly varied structures, so I'm just going to create a manual set of labels
+names <- c("Adler_2002", "Bourdieu_1986", "Burt_1992", "Coleman_1990", "Coleman_1988", "Granovetter_1973", "Lin_2001", "Nahapiet_1998", "Portes_1998", "Putnam_2000", "Putnam_1995", "Putnam_1993")
+rownames(fg_cites) <- names
+rownames(lc_cites) <- names
+
+# Just making object names consistent with an old version I shared w/ Kate.
+fgct <- lapply(lapply(fgcc_clusters, get.adjacency), as.matrix)
+lcct <- lapply(lapply(lccc_clusters, get.adjacency), as.matrix)
+for(i in 1:length(fgct)){
+  rownames(fgct[[i]]) <- names
+  colnames(fgct[[i]]) <- names
+}
+for(i in 1:length(lcct)){
+  rownames(lcct[[i]]) <- names
+  colnames(lcct[[i]]) <- names
+}
+
+# Need to generate the baseline expectations
+# Works as anticipated, just commented out so I don't accidentally run it again (takes a while)
+# rcc <- list(NA)
+# for (i in 1:1000){
+#   t <- sample_degseq(degree(cgc, mode="out"), in.deg = degree(cgc, mode="in"))
+#   cocite <- graph.adjacency(tcrossprod(get.adjacency(t)), mode="undirected", diag=F, weighted=T)
+# 	cct <- induced.subgraph(cocite, which(V(cgc)$names %in% top_cites))
+# 	tab <- cbind(ends(cct, E(cct)), E(cct)$weight)
+#   rcc[[i]] <- mat
+#   for (j in 1:nrow(tab)){
+#     rcc[[i]][tab[j,1], tab[j,2]] <- tab[j,3]
+#   }
+#   rcc[[i]] <- rcc[[i]]/length(V(cgc))
+#   print(i)
+# }
+# save(rcc, file="data/baseline.Rdata")
+
+# Read stored version of the above
+load("data/baseline.Rdata")
+
+# Convert to proportions 
+fg_size <- fg_comms
+fg_prop <- list(NA)
+fg_z <- list(NA)
+lc_size <- lc_comms
+lc_prop <- list(NA)
+lc_z <- list(NA)
+
+# Summary of baselines
+library(abind)
+ary <- abind(rcc, along = 3)
+fg_mean <- apply(ary, 1:2, mean)
+fg_sd <- apply(ary, 1:2, sd)
+ary <- abind(rcc, along = 3)
+lc_mean <- apply(ary, 1:2, mean)
+lc_sd <- apply(ary, 1:2, sd)
+
+# Compute z-scores
+for (i in 1:length(fg_size)){
+  fg_prop[[i]] <- fgct[[i]]/fg_size[i]
+  fg_z[[i]] <- (fg_prop[[i]]-fg_mean)/fg_sd
+}
+for (i in 1:length(lc_size)){
+  lc_prop[[i]] <- lcct[[i]]/lc_size[i]
+  lc_z[[i]] <- (lc_prop[[i]]-lc_mean)/lc_sd
+}
+
+save(fg_z, fgct, fg_cites, file="data/fast_greedy.rda")
+save(lc_z, lcct, lc_cites, file="data/louvain.rda")
+```

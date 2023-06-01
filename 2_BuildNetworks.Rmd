@@ -1,0 +1,44 @@
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Let's build some networks we'll make use of here.
+First, using the bibliometrix package.
+```{r slices}
+library(bibliometrix)
+load("data/social_capital.rdata")
+
+# Citation
+fullcites <- histNetwork(df, min.citations = 1, sep = ";")
+artcites <- histNetwork(df_art, min.citations = 1, sep = ";")
+
+# Co-citation
+art_co <- biblioNetwork(df_art, analysis="co-citation", network="references", sep=";", shortlabel = F)
+full_co <- biblioNetwork(df, analysis="co-citation", network="references", sep=";", shortlabel = F)
+
+# Converting to igraph objects
+library(igraph)
+art_citation<- graph_from_adjacency_matrix(artcites$NetMatrix, mode="directed", diag=F)
+all_citation <- graph_from_adjacency_matrix(fullcites$NetMatrix, mode="directed", diag=F)
+
+art_cocite <- graph_from_adjacency_matrix(art_co, mode="undirected", diag=F, weighted=T)
+all_cocite <- graph_from_adjacency_matrix(full_co, mode="undirected", diag=F, weighted=T)
+
+# Creating and index for matching later.
+save(fullcites, artcites, art_citation, all_citation, art_cocite, all_cocite, file="data/bibmx_networks.Rdata")
+```
+
+Now, let's take those and generate some bibliographic coupling networks, using some old scripts of my own.
+  NOTE: These are SLOW!
+I'm including these because they're constructed slightly differently than the bibliometrix versions.
+The above versions do not retain those cited that weren't in the original corpus (which matters especially for my uses of the citation network here). 
+
+```{r bibcoupling}
+source("scripts/Scientometric_Networks.R")
+# I actually ran these individually & manually, but these work.
+citation <- SciNets(df, "citation", c("ARTICLE", "LETTER", "NOTE", "REVIEW", "ARTICLE; EARLY ACCESS", "ARTICLE; BOOK CHAPTER"))
+bibcoup <- SciNets(df, "bibcoup", c("ARTICLE", "LETTER", "NOTE", "REVIEW", "ARTICLE; EARLY ACCESS", "ARTICLE; BOOK CHAPTER"))
+cocite <- SciNets(df, "cocite", c("ARTICLE", "LETTER", "NOTE", "REVIEW", "ARTICLE; EARLY ACCESS", "ARTICLE; BOOK CHAPTER"))
+save(citation, bibcoup, cocite, file="data/networks.Rdata")
+```
