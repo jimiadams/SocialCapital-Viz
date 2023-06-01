@@ -5,51 +5,109 @@ date:  "`r format(Sys.time(), '%Y %B %d')`"
 output: pdf_document
 bibliography: references.bib
 link-citations: true
-
 ---
 
-This document provides further details and justification for some of the analytic decisions made in the primary manuscript. We also provide some additional ancillary descriptive characteristics of our analytic corpus and results.
+This document provides further details and justification for some of the analytic decisions made in the primary manuscript. We also provide some additional ancillary descriptive characteristics of our analytic corpus and results.^[Code for all analyses can be found at:  https://github.com/jimiadams/SocialCapital-Viz.]
+
+## Network Construction
 
 First, some basic information about the scope of the corpus and constructed networks.
 
   - Number of papers in corpus: 21,160
   - Total citations: 985,749 (to 533,111 unique papers)
-  - Giant component [@Harary:1969] size in citation network: 546,159 (only drops 4,073 papers from focal corpus)
+  - Giant component [@Harary:1969] size in citation network: 546,159
+      - this drops 4,073 papers from focal corpus
   - Citations in GC: 981,875 (to 529,244 unique papers)
-  
-For conducting the community structure analyses on this citation network, the paper presents results using [@Blondel:2008aa], but we also ran all analyses using [@Clauset2004]. In the summaries in this SI, we include both, and also elaborate the demosntrated demonstrated similarities and differences between these strategies. After applying the community detection algorithms on the citation giant component, we have: 
+
+## Identifying Key Papers
+
+Next, here are the identified "key papers" (those receiving >1000 citations from within the corpus; the *least* cited of these is cited by >5% of *all* papers in the corpus) and the umber of citations each received from within the corpus, sorted by number of citations received:
+
+Citation            Cites
+--------            -------------
+@coleman_1988       4095
+@putnam_2000        3594
+@putnam_1993        2802
+@portes_1998        2289
+@granovetter_1973   2157
+@nahapiet_1998      2113
+@coleman_1990       2097
+@bourdieu_1986      2090             
+@putnam_1995        1785
+@adler_2002         1609
+@lin_2001           1220
+@burt_1992          1062
+--------            -------------- 
+
+Alphabetized:
+
+Citation            Cites
+--------            -------------
+@adler_2002         1609
+@bourdieu_1986      2090             
+@burt_1992          1062
+@coleman_1990       2097
+@coleman_1988       4095
+@granovetter_1973   2157
+@lin_2001           1220
+@nahapiet_1998      2113
+@portes_1998        2289
+@putnam_2000        3594
+@putnam_1995        1785
+@putnam_1993        2802
+--------            --------------   
+
+Given that two of these papers are not primarily original theorization of the social capital concept, but review papers summarizing its application in particular fields, the prominence of their citations in those fields (and central role in defining 2 of the clusters described in the manuscript itself) provides additional evidence of a pattern of citation "hijacking" by review articles as described by @McMahan_2021. 
+
+## Estimating Community Structure
+For conducting the community structure analyses on this citation network, the paper presents results using [@Blondel:2008aa], but we also ran all analyses using [@Clauset2004]. In the summaries in this SI, we include both, and also elaborate the demonstrated similarities and differences between these strategies. After applying the community detection algorithms on the citation giant component, we have: 
   
   - Number of papers in components size>10k
-    - fast-greedy solution: 307,977
     - louvain solution: 304,163
+    - fast-greedy solution: 307,977
     
-  - Size of those components in the louvain solution
-    - 
-    
-Identifying the "top citations" (receiving >= 1k citations within the corpus):
-  
-  - [1] "adler ps, 2002, acad manage rev, v27, p17, doi 10.2307/4134367"
-  - [2] "bourdieu p., 1986, hdb theory res socio, doi doi 10.1002/9780470755679.ch15"
-  - [3] "burt r, 1992, structural holes soc"                                         
-  - [4] "coleman j., 1990, fdn social theory"                                        
-  - [5] "coleman js, 1988, am j sociol, v94, ps95, doi 10.1086/228943"               
-  - [6] "granovetter ms, 1973, am j sociol, v78, p1360, doi 10.1086/225469"          
-  - [7] "lin nan, 2001, social capital theor"                                        
-  - [8] "nahapiet j, 1998, acad manage rev, v23, p242, doi 10.2307/259373"           
-  - [9] "portes a, 1998, annu rev sociol, v24, p1, doi 10.1146/annurev.soc.24.1.1"   
-  - [10] "putnam r., 2000, bowling alone collap"                                      
-  - [11] "putnam rd, 1995, j democracy, v0006"                                        
-  - [12] "putnam robert d., 1993, making democracy wor"
-  
-How many citations are there to the set of those top citations in the largest citation clusters?
-  - Raw count: 681  777  868  354  427 1929 2886 6022 4306 1656 
-  - As a proportion of citations sent within those clusters: 
-  
-Which communities are each of the top_cites in (recognizing this isn't the question here)? 
+The modularity-maximized solutions identify 6 (Louvain) and 5 (fast greedy) communities respectively containing >1000 papers in each, and each these provide *clear* cut-points, as is common graph theoretically (e.g., the next largest component in the Louvain solution has 389 papers, while in the fast-greedy solution it contains fewer than 50 papers). Within those components, the largest clusters include respectively (N, %) of the papers from the focal corpus:
 
-  - In FG solution, they're all in the same community. 
-  - In louvain, they are in five separate communities
-      - {adler, burt, coleman_1990, granovetter, nahapiet}
-      - {bourdieu, lin, putnam_2000}
-      - {coleman_1988}
-      - {portes, putnam_1995, putnam_1993}). 
+**Louvain Solution**
+
+Cluster   Papers        % of Corpus       
+--------  ---------     ---------
+1         2516            11.9
+2         2319            11.0 
+3         2212            10.5
+4         1514            7.2
+5         1449            6.8
+6         1210            5.7
+Total     11220           53
+
+--------  ---------     ---------
+
+**Fast-Greedy Solution**
+
+Cluster   Papers        % of Corpus       
+--------  ---------     ---------
+1         3980            18.8
+2         3060            14.5 
+3         2692            12.7
+4         1485            7.0
+5         754             3.6
+Total     11971           56
+--------  ---------     ---------
+  
+Across these clusters, the key papers collectively receive the following number of citations:^[The paper-specific citations can be found in the top panel of Figure 1 in the manuscript, and the [solution_name]_cites object in the .Rda files in the GitHub repo data folder.]
+
+  - Louvain solution - {7149 4090 3467 3263 3626 3106}
+  - fast greedy solution - {9363 8433 4320 3202  933}
+
+## Exploring the *content* of the clusters
+To provide some short-hand labels for discussing the results here in a more readily parsimonious way, I finally examined for the citing papers within each of the identified communities the distributions of their (1) journals' ISI subject categories, (2) author provided keywords, and (3) ISI-provided keywords. 
+
+**This warrants an important caveat; these are *not* intended as providing systematic potential accounts of the sources of the differences identified here; that would require more detailed analytic strategies that are beyond the scope of this analysis and paper. These are merely meant to provide heurisitc labels that are more intelligible than arbitrary numeric labels, for ease of discussion in the manuscript.** 
+
+That interpretive caveat having been established, below, we provide the top subject categories and keywords for each of the community solutions, to illustrate how the preliminary labels were generated.
+
+``` {r table}
+
+```
+      
+## References

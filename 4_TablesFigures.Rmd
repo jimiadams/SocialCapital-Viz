@@ -32,6 +32,9 @@ Ok, now for the analyses in the actual paper.
 ```{r analyses}
 library(Matrix)
 
+# Citations to key papers in full corpus
+  cbind(V(citation)$names[which(V(citation)$deg %in% sort(V(citation)$deg, decreasing=T)[1:12])], V(citation)$deg[which(V(citation)$deg %in% sort(V(citation)$deg, decreasing=T)[1:12])])
+  
 # Grabbing the number of citations to top_cites papers by cluster
 fgcc_clusters <- rg_fg100 # top_cites co-citation by cluster
 fg_cites <- matrix(data=NA, nrow=length(top_cites), ncol=length(rg_fg100), dimnames=list(top_cites, names(fg_100)))
@@ -145,4 +148,9 @@ for (i in 1:length(lc_size)){
 
 save(fg_z, fgct, fg_cites, file="data/fast_greedy.rda")
 save(lc_z, lcct, lc_cites, file="data/louvain.rda")
+```
+
+To provide tentatively meaningful labels to the identified communities, let's explore the citing papers' distribution of the citing papers' journals' ISI subject categories, and their keywords.
+```{r analyses}
+
 ```
