@@ -2,10 +2,17 @@
 title: 'Supplementary Information: Whose Social Capital?'
 author: "jimi adams & Kate Vinita Fitch"
 date:  "`r format(Sys.time(), '%Y %B %d')`"
-output: pdf_document
+output:
+  pdf_document:
+    pandoc_args: --listings
+    includes:
+      in_header: preamble.tex
 bibliography: references.bib
 link-citations: true
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 This document provides further details and justification for some of the analytic decisions made in the primary manuscript. We also provide some additional ancillary descriptive characteristics of our analytic corpus and results.^[Code for all analyses can be found at:  https://github.com/jimiadams/SocialCapital-Viz.]
 
@@ -104,10 +111,23 @@ To provide some short-hand labels for discussing the results here in a more read
 
 **This warrants an important caveat; these are *not* intended as providing systematic potential accounts of the sources of the differences identified here; that would require more detailed analytic strategies that are beyond the scope of this analysis and paper. These are merely meant to provide heurisitc labels that are more intelligible than arbitrary numeric labels, for ease of discussion in the manuscript.** 
 
-That interpretive caveat having been established, below, we provide the top subject categories and keywords for each of the community solutions, to illustrate how the preliminary labels were generated.
+That interpretive caveat having been established, below, we provide the top subject categories and keywords for each of the community solutions, to illustrate how the preliminary labels were generated. (Sorry for the lazy formatting.)
 
-``` {r table}
-
+``` {r, include=T, echo=F}
+load("data/KWs.rda")
+ltops$label[1] <- "management"
+ltops$label[4] <- "governance & development"
+ltops$label[7] <- "health"
+ltops$label[10] <- "education, childhood, & adolescence"
+ltops$label[13] <- "(online) civic engagement"
+ltops$label[16] <- "migration & community"
+for (i in 1:18){
+  print(ltops[i,1:3])
+  print(ltops[i,4])
+  if(i %in% c(3, 6, 9, 12, 15)){print("________________________________________________")}
+}
 ```
-      
+
+It's worth noting that while the number and size of communities differs a bit between the solutions, there are similar differences across communities in terms of citation distributions and co-citation patterns. Moreover, in this labeling exercise, the heuristic labels for these communities have substantial overlap, with 4 of the communities strongly aligning across each, and the labels of the fifth in the fast greedy solution seem to have been distributed over two communities in the louvain solution. Again, these are relatively simplisitic means of assigning those labels, so should not be overly-interpreted, however the similarities between them again speaks to the robustness of the general pattern being described in the manuscript.
+
 ## References

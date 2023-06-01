@@ -152,5 +152,69 @@ save(lc_z, lcct, lc_cites, file="data/louvain.rda")
 
 To provide tentatively meaningful labels to the identified communities, let's explore the citing papers' distribution of the citing papers' journals' ISI subject categories, and their keywords.
 ```{r analyses}
+#ISI journal subject categories
+l_WC <- matrix(data=NA, nrow=20, ncol=6) 
+f_WC <- matrix(data=NA, nrow=20, ncol=5)  
+for (i in 1:length(lc_1000)){
+  l_WC[,i] <- unlist(dimnames(sort(table(lc_1000[[i]]$WC), decreasing = T)[1:20]))
+}
+for (i in 1:length(fg_100)){
+  f_WC[,i] <- unlist(dimnames(sort(table(fg_100[[i]]$WC), decreasing = T)[1:20]))
+}
 
+# Author provided keywords
+l_DE <- matrix(data=NA, nrow=50, ncol=6) 
+f_DE <- matrix(data=NA, nrow=50, ncol=5)  
+for (i in 1:length(lc_1000)){
+  l_DE[,i] <- unlist(dimnames(sort(table(unlist(strsplit(lc_1000[[i]]$DE, ";", fixed = F))), decreasing=T)[1:50]))
+}
+for (i in 1:length(fg_100)){
+  f_DE[,i] <- unlist(dimnames(sort(table(unlist(strsplit(fg_100[[i]]$DE, ";", fixed = F))), decreasing=T)[1:50]))
+}
+
+# ISI generated keywords
+l_ID <- matrix(data=NA, nrow=50, ncol=6) 
+f_ID <- matrix(data=NA, nrow=50, ncol=5)  
+for (i in 1:length(lc_1000)){
+  l_ID[,i] <- unlist(dimnames(sort(table(unlist(strsplit(lc_1000[[i]]$ID, ";", fixed = F))), decreasing=T)[1:50]))
+}
+for (i in 1:length(fg_100)){
+  f_ID[,i] <- unlist(dimnames(sort(table(unlist(strsplit(fg_100[[i]]$ID, ";", fixed = F))), decreasing=T)[1:50]))
+}
+
+library(flextable)
+
+ltops <- data.frame(
+  comm=c(1, rep("", 2), 2, rep("", 2), 3, rep("", 2), 4, rep("", 2), 5, rep("", 2), 6, rep("", 2)),
+  label=c(NA, rep("", 2), NA, rep("", 2), NA, rep("", 2), NA, rep("", 2), NA, rep("", 2), NA, rep("", 2)),
+  dat=rep(c("journal caetgories", "author keywords", "ISI keywords"), 6), top=NA)
+row <- 0
+for (i in 1:6){
+  row <- row + 1
+  ltops$top[row] <- paste(tolower(unlist(l_WC[,i])), collapse=" | ")
+  ltops$top[row+1] <- paste(tolower(unlist(l_DE[,i])), collapse=" | ")
+  ltops$top[row+2] <- paste(tolower(unlist(l_ID[,i])), collapse=" | ")
+}
+
+ftops <- data.frame(
+  comm=c(1, rep("", 2), 2, rep("", 2), 3, rep("", 2), 4, rep("", 2), 5, rep("", 2)),
+  label=c(NA, rep("", 2), NA, rep("", 2), NA, rep("", 2), NA, rep("", 2), NA, rep("", 2)),
+  dat=rep(c("journal caetgories", "author keywords", "ISI keywords"), 5), top=NA)
+row <- 0
+for (i in 1:5){
+  row <- row + 1
+  ftops$top[row] <- paste(tolower(unlist(f_WC[,i])), collapse=" | ")
+  ftops$top[row+1] <- paste(tolower(unlist(f_DE[,i])), collapse=" | ")
+  ftops$top[row+2] <- paste(tolower(unlist(f_ID[,i])), collapse=" | ")
+}
+save(ltops, ftops, file="output/KWs.rda")
+
+library(flextable)
+library(knitr)
+load("~/GitHub/SocialCapital-Viz/data/KWs.rda")
+ft <- flextable(ltops)
+ft <- autofit(ft)
+#knit_print(ft)
+#flextable(ftops)
 ```
+
