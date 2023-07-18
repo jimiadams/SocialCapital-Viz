@@ -4,7 +4,7 @@ Using bibliometric analyses to visualize fractures in social capital research. [
 This repo provides the code (but not the data)[^1] for replicating the analyses in the manuscript.
 
 ## Basic Steps - 
-0. As with most of these types of analyses in the work I've done w/ Ryan Light (see details [here](https://sites.google.com/site/jimiadams/projects/ideas)), I start from ISI. There's a screengrab version of my search criteria [here](Search_Criteria.png).[^2] The search[^3] narrowly defined the corpus as all documents including "social capital" as a topic.[^4]
+0. As with most of these types of analyses in the work I've done w/ Ryan Light (see details [here](https://jimiadams.github.io/projects/ideas/)), I start from ISI. There's a screengrab version of my search criteria [here](Search_Criteria.png).[^2] The search[^3] narrowly defined the corpus as all documents including "social capital" as a topic.[^4]
 1. **1_DataProcessing.R** - I used the [bibliometrix](https://www.bibliometrix.org/) package to process those files into dataframe format.
 1. **2_BuildNetworks.Rmd** - I used an old script of mine Scientometric_Networks.R (in the scripts folder) to construct citation, co-citation, and bibliographic coupling networks from these data. 
     - Dependencies: social_capital.Rdata (created in step 1).
