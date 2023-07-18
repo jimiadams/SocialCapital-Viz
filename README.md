@@ -1,5 +1,5 @@
 # Social Capital Visualization
-Using bibliometric analyses to visualize fractures in social capital research. Paper to be published in Socius w/ Kate Vinita Fitch. The basic idea here is to provide a preliminary characterization of the existing divides and lack of consensus around conceptualization and usage of social capital as a concept.
+Using bibliometric analyses to visualize fractures in social capital research. [Paper](https://journals.sagepub.com/doi/10.1177/23780231231184766) published in *Socius* w/ Kate Vinita Fitch. The basic idea here is to provide a preliminary characterization of the existing divides and lack of consensus around conceptualization and usage of social capital as a concept.
 
 This repo provides the code (but not the data)[^1] for replicating the analyses in the manuscript.
 
